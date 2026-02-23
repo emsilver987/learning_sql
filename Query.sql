@@ -21,25 +21,36 @@
 
 
 CREATE TABLE courses (
-    Code varchar(10) PRIMARY KEY,
-    Course_Name varchar(10),
+    Code varchar(10) NOT NULL PRIMARY KEY,
+    Course_Name varchar(8),
     Year_of_Use SMALLINT,
-    Semester_of_use varchar(10),
-    TextbookID varchar(10),
+    Semester_of_use varchar(8),
+    TextbookID varchar(1),
     CONSTRAINT FK_PersonOrder FOREIGN KEY (TextbookID)
     REFERENCES TextBook(TextbookID)
 );
 
 CREATE TABLE TextBook (
-    TextBookID VARCHAR NOT NULL PRIMARY KEY,
-    Title varchar(10),
+    Title VARCHAR(80) NOT NULL PRIMARY KEY,
     Year_Published smallint
 );
 
 SELECT * FROM courses;
 SELECT * FROM TextBook;
 
-INSERT INTO courses VALUES ('Harry Potter');
+INSERT INTO courses VALUES (
+    'CS443', 'Database Systems',
+    '2026', 'Spring', 'Database Systems'
+);
+
+INSERT INTO TextBook VALUES( 'Database Systems: The only Relation you Need', '2004'
+);
+
+UPDATE TextBook
+SET Year_Published = '2002'
+WHERE title = 'Database Systems: The only Relation you Need';
+
+DELETE FROM TextBook where Year_Published = '2002';
 
 DROP TABLE courses;
 DROP TABLE TextBook;
