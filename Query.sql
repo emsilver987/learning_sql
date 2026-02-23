@@ -26,32 +26,66 @@ CREATE TABLE TextBook (
 
 CREATE TABLE courses (
     Code varchar(10) NOT NULL PRIMARY KEY,
-    Course_Name varchar(20),
+    Course_Name varchar(30),
     Year_of_Use SMALLINT,
     Semester_of_use varchar(8),
     Title varchar(80),
-    CONSTRAINT FK_PersonOrder FOREIGN KEY (Title)
+    FOREIGN KEY (Title)
     REFERENCES TextBook(Title)
 );
 
-SELECT * FROM courses;
-SELECT * FROM TextBook;
+ALTER TABLE courses
+DROP CONSTRAINT courses_title_fkey;
 
+ALTER TABLE courses
+ADD CONSTRAINT courses_title_fkey
+FOREIGN KEY (title)
+REFERENCES textbook(title)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
 
-INSERT INTO TextBook VALUES( 'Database Systems: The only Relation you Need', '2004'
+INSERT INTO TextBook VALUES( 'Database Systems: The only Relation you Need', 2004
 );
+
+INSERT INTO TextBook VALUES( 'Theory of Computation', 2014
+);
+
+INSERT INTO TextBook VALUES( 'Secure security for secrets', 2002
+);
+
 
 INSERT INTO courses VALUES (
     'CS443', 'Database Systems',
-    '2026', 'Spring', 'Database Systems: The only Relation you Need'
+    2026, 'Spring', 'Database Systems: The only Relation you Need'
 );
 
 
+INSERT INTO courses VALUES (
+    'CS484', 'Theory of Computation',
+    2021, 'Fall', 'Theory of Computation'
+);
+
+
+INSERT INTO courses VALUES (
+    'CS432', 'Security in Computing',
+    2024, 'Fall', 'Secure security for secrets'
+);
+
+-- If semester was incorrectly identified for all 2026 year
+UPDATE courses
+SET Semester_of_use = 'Fall'
+WHERE Year_of_Use = 2026;
+
+DELETE FROM courses where Code = 'CS432';
+
 UPDATE TextBook
-SET Year_Published = '2002'
+SET Year_Published = 2009
 WHERE title = 'Database Systems: The only Relation you Need';
 
 DELETE FROM TextBook where Year_Published = '2002';
 
-DROP TABLE courses;
-DROP TABLE TextBook;
+SELECT * FROM courses;
+SELECT * FROM TextBook;
+
+--DROP TABLE courses;
+--DROP TABLE TextBook;
