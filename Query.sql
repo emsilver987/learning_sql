@@ -19,32 +19,33 @@
 -- so year will be int of 3 bytes if I have to specifcy
 
 
-
-CREATE TABLE courses (
-    Code varchar(10) NOT NULL PRIMARY KEY,
-    Course_Name varchar(8),
-    Year_of_Use SMALLINT,
-    Semester_of_use varchar(8),
-    TextbookID varchar(1),
-    CONSTRAINT FK_PersonOrder FOREIGN KEY (TextbookID)
-    REFERENCES TextBook(TextbookID)
-);
-
 CREATE TABLE TextBook (
     Title VARCHAR(80) NOT NULL PRIMARY KEY,
     Year_Published smallint
 );
 
+CREATE TABLE courses (
+    Code varchar(10) NOT NULL PRIMARY KEY,
+    Course_Name varchar(20),
+    Year_of_Use SMALLINT,
+    Semester_of_use varchar(8),
+    Title varchar(80),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (Title)
+    REFERENCES TextBook(Title)
+);
+
 SELECT * FROM courses;
 SELECT * FROM TextBook;
 
-INSERT INTO courses VALUES (
-    'CS443', 'Database Systems',
-    '2026', 'Spring', 'Database Systems'
-);
 
 INSERT INTO TextBook VALUES( 'Database Systems: The only Relation you Need', '2004'
 );
+
+INSERT INTO courses VALUES (
+    'CS443', 'Database Systems',
+    '2026', 'Spring', 'Database Systems: The only Relation you Need'
+);
+
 
 UPDATE TextBook
 SET Year_Published = '2002'
